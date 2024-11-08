@@ -7,29 +7,39 @@ body {
     font-family: Arial, sans-serif;
 }
 
+h1 {
+    margin-bottom: 20px;
+}
+
 .seat-chart {
     display: grid;
-    grid-template-columns: repeat(5, 60px); /* Adjust the number of columns for your chart */
-    gap: 10px;
+    grid-template-columns: repeat(8, 60px); /* 8 columns for the desks */
+    grid-template-rows: repeat(5, 60px); /* 5 rows for the desks */
+    gap: 15px;
     margin: 20px 0;
 }
 
 .seat {
     width: 60px;
     height: 60px;
-    background-color: #d3d3d3;
+    background-color: #cce5ff;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid #007bff;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+    transition: background-color 0.3s;
 }
 
+/* Different color and cursor for occupied seats */
 .seat.occupied {
     background-color: #ff6b6b;
     cursor: not-allowed;
 }
 
+/* Highlight selected seat */
 .seat.selected {
     background-color: #4caf50;
 }
