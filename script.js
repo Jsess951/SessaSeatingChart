@@ -1,15 +1,16 @@
 // script.js
 
-// Define an 8x5 grid of seats (desks)
 const rows = 5;
 const columns = 8;
 const seats = Array.from({ length: rows * columns }, (_, index) => ({
     id: index + 1,
-    occupied: Math.random() < 0.2 // Randomly set some desks as occupied
+    occupied: Math.random() < 0.2, // Randomly set some desks as occupied
+    reservedBy: null
 }));
 
 const seatChart = document.getElementById('seatChart');
 const confirmBtn = document.getElementById('confirmBtn');
+const studentNameInput = document.getElementById('studentName');
 let selectedSeat = null;
 
 // Render the seats as an 8x5 grid
@@ -18,16 +19,19 @@ function renderSeats() {
     seats.forEach((seat) => {
         const seatDiv = document.createElement('div');
         seatDiv.classList.add('seat');
-        seatDiv.innerText = `Desk ${seat.id}`;
         
-        // Set class for occupied or selected seats
+        if (seat.reservedBy) {
+            seatDiv.innerText = `Desk ${seat.id}\n(${seat.reservedBy})`;
+        } else {
+            seatDiv.innerText = `Desk ${seat.id}`;
+        }
+        
         if (seat.occupied) {
             seatDiv.classList.add('occupied');
         } else if (selectedSeat && selectedSeat.id === seat.id) {
             seatDiv.classList.add('selected');
         }
         
-        // Add click event to select seat if not occupied
         seatDiv.addEventListener('click', () => selectSeat(seat));
         seatChart.appendChild(seatDiv);
     });
@@ -42,13 +46,21 @@ function selectSeat(seat) {
     renderSeats();
 }
 
-// Confirm seat selection
+// Confirm seat selection with the student's name
 confirmBtn.addEventListener('click', () => {
+    const studentName = studentNameInput.value.trim();
+    
+    if (!studentName) {
+        alert("Please enter your name before confirming.");
+        return;
+    }
+
     if (selectedSeat) {
-        alert(`Desk ${selectedSeat.id} confirmed!`);
+        selectedSeat.reservedBy = studentName;
         selectedSeat.occupied = true;
         selectedSeat = null;
         confirmBtn.disabled = true;
+        studentNameInput.value = ''; // Clear the name input after confirmation
         renderSeats();
     }
 });
