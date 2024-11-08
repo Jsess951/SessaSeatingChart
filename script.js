@@ -2,9 +2,13 @@
 
 const rows = 5;
 const columns = 8;
+// Define seats with all desks unoccupied initially
 const seats = Array.from({ length: rows * columns }, (_, index) => ({
     id: index + 1,
-    occupied: Math.random() < 0.2, // Randomly set some desks as occupied
+    occupied: false, // All desks start as unoccupied
+const seats = Array.from({ length: rows * columns }, (_, index) => ({
+    id: index + 1,
+    occupied: Math.random() < 0.2, // All desks start as unoccupied
     reservedBy: null
 }));
 
