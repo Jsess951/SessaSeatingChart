@@ -1,0 +1,46 @@
+/* styles.css */
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.seat-chart {
+    display: grid;
+    grid-template-columns: repeat(5, 60px); /* Adjust the number of columns for your chart */
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.seat {
+    width: 60px;
+    height: 60px;
+    background-color: #d3d3d3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.seat.occupied {
+    background-color: #ff6b6b;
+    cursor: not-allowed;
+}
+
+.seat.selected {
+    background-color: #4caf50;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+}
