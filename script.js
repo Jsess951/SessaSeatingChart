@@ -1,43 +1,39 @@
 // script.js
 
-const seats = [
-    { id: 1, occupied: false },
-    { id: 2, occupied: false },
-    { id: 3, occupied: true },
-    { id: 4, occupied: false },
-    { id: 5, occupied: false },
-    { id: 6, occupied: true },
-    { id: 7, occupied: false },
-    { id: 8, occupied: false },
-    { id: 9, occupied: false },
-    { id: 10, occupied: true }
-];
+// Define an 8x5 grid of seats (desks)
+const rows = 5;
+const columns = 8;
+const seats = Array.from({ length: rows * columns }, (_, index) => ({
+    id: index + 1,
+    occupied: Math.random() < 0.2 // Randomly set some desks as occupied
+}));
 
 const seatChart = document.getElementById('seatChart');
 const confirmBtn = document.getElementById('confirmBtn');
 let selectedSeat = null;
 
-// Render the seats
+// Render the seats as an 8x5 grid
 function renderSeats() {
     seatChart.innerHTML = '';
     seats.forEach((seat) => {
         const seatDiv = document.createElement('div');
         seatDiv.classList.add('seat');
-        seatDiv.innerText = seat.id;
+        seatDiv.innerText = `Desk ${seat.id}`;
         
-        // Set occupied or available class
+        // Set class for occupied or selected seats
         if (seat.occupied) {
             seatDiv.classList.add('occupied');
         } else if (selectedSeat && selectedSeat.id === seat.id) {
             seatDiv.classList.add('selected');
         }
         
+        // Add click event to select seat if not occupied
         seatDiv.addEventListener('click', () => selectSeat(seat));
         seatChart.appendChild(seatDiv);
     });
 }
 
-// Select seat function
+// Select a seat
 function selectSeat(seat) {
     if (seat.occupied) return;
 
@@ -46,10 +42,10 @@ function selectSeat(seat) {
     renderSeats();
 }
 
-// Confirm seat
+// Confirm seat selection
 confirmBtn.addEventListener('click', () => {
     if (selectedSeat) {
-        alert(`Seat ${selectedSeat.id} confirmed!`);
+        alert(`Desk ${selectedSeat.id} confirmed!`);
         selectedSeat.occupied = true;
         selectedSeat = null;
         confirmBtn.disabled = true;
