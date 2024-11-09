@@ -17,6 +17,7 @@ const initializeSeats = () => Array.from({ length: rows * columns }, (_, index) 
 // Load seats from localStorage for the selected class, or create if none exists
 function loadSeats() {
     const savedSeats = localStorage.getItem(currentClass);
+    console.log(savedSeats); // This will show if any data is being retrieved
     return savedSeats ? JSON.parse(savedSeats) : initializeSeats();
 }
 
