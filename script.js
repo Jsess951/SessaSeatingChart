@@ -58,6 +58,42 @@ function selectSeat(seat) {
     renderSeats();
 }
 
+confirmBtn.addEventListener('click', () => {
+    const studentName = studentNameInput.value.trim();
+
+    if (!studentName) {
+        alert("Please enter your name before confirming.");
+        return;
+    }
+
+    if (selectedSeat) {
+        // Toggle the reserved status of the seat
+        if (selectedSeat.reservedBy === studentName) {
+            selectedSeat.reservedBy = null;
+            selectedSeat.occupied = false;
+        } else {
+            selectedSeat.reservedBy = studentName;
+            selectedSeat.occupied = true;
+        }
+
+        selectedSeat = null; // Clear selection
+        confirmBtn.disabled = true;
+        studentNameInput.value = ''; // Clear the input field
+        saveSeats(); // Save the updated seats state to localStorage
+        renderSeats(); // Re-render seats
+    }
+});
+
+function selectSeat(seat) {
+    if (!seat.occupied || seat.reservedBy === studentNameInput.value.trim()) {
+        selectedSeat = seat;
+        confirmBtn.disabled = false; // Enable confirm button
+        renderSeats();
+    } else {
+        alert("This seat is already reserved by another student.");
+    }
+}
+
 // Confirm seat selection with the student's name
 confirmBtn.addEventListener('click', () => {
     const studentName = studentNameInput.value.trim();
